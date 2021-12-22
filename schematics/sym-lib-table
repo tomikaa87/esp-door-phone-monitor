@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name esp-thermostat)(type Legacy)(uri /Users/tkarpati/github/esp-thermostat/pcb/esp-thermostat/esp-thermostat-cache.lib)(options "")(descr ""))
+)
