@@ -13,7 +13,7 @@ namespace RingingSensor
 ICACHE_RAM_ATTR void ringingSensorIsr()
 {
     RingingSensor::triggerCount += 1;
-    digitalWrite(LED_BUILTIN, RingingSensor::triggerCount & 1 == 1);
+    digitalWrite(LED_BUILTIN, (RingingSensor::triggerCount & 1) == 1);
 }
 
 DoorPhoneMonitor::DoorPhoneMonitor(const ApplicationConfig& appConfig)
@@ -28,8 +28,13 @@ DoorPhoneMonitor::DoorPhoneMonitor(const ApplicationConfig& appConfig)
     _coreApplication.setMqttUpdateHandler([this]{ updateMqtt(); });
 
     // Setup ringing sensor input pin
-    pinMode(D7, INPUT);
-    attachInterrupt(D7, ringingSensorIsr, FALLING);
+    pinMode(D1, INPUT);
+    attachInterrupt(D1, ringingSensorIsr, FALLING);
+
+    // Setup speaker enable control pin
+    pinMode(D2, OUTPUT);
+    // Enable the speaker by default
+    digitalWrite(D2, 1);
 
     // LED pin for testing
     pinMode(LED_BUILTIN, OUTPUT);
@@ -66,6 +71,11 @@ void DoorPhoneMonitor::task()
 
 void DoorPhoneMonitor::setupMqtt()
 {
+    _mqtt.muted.setChangedHandler([this](const bool& value) {
+        _log.info("mute state changed: muted=%d", value ? 1 : 0);
+        digitalWrite(D2, value ? 0 : 1);
+    });
+
     updateMqtt();
 }
 

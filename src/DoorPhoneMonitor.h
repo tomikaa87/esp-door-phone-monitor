@@ -31,7 +31,7 @@ private:
     struct Mqtt {
         Mqtt(MqttClient& mqttClient)
             : ringing{ PSTR("doorphone/ringing"), mqttClient }
-            , muted{ PSTR("doorphone/muted"), mqttClient }
+            , muted{ PSTR("doorphone/muted"), PSTR("doorphone/mute"), mqttClient }
         {}
 
         MqttVariable<bool> ringing;
