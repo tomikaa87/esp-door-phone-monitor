@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "SamacSys Parts")(type "Legacy")(uri "C:/git/github/esp-door-phone-monitor/schematics/lib/SamacSys_Parts.lib")(options "")(descr ""))
+  (lib (name "axicom-fx2")(type "KiCad")(uri "C:/git/github/esp-door-phone-monitor/schematics/lib/axicom-fx2.kicad_sym")(options "")(descr ""))
+)

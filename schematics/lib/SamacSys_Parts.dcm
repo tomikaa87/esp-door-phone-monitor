@@ -1,0 +1,105 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP NE555DR
+D Single Precision Timer
+K
+F http://www.ti.com/lit/ds/symlink/ne555.pdf
+$ENDCMP
+#
+$CMP MMSS8050-H-TP
+D Bipolar Transistors - BJT 625mW, 25V, 1500mA
+K
+F http://www.mccsemi.com/up_pdf/MMSS8050(SOT-23).pdf
+$ENDCMP
+#
+$CMP HK4100F-DC5V-SHG
+D Relays General Purpose Non Latching 5VDC SPDT 3A (250VAC , 30VDC) Max DIP RoHS
+K
+F https://datasheet.lcsc.com/szlcsc/1905051831_Ningbo-Keke-New-Era-Appliance-HK4100F-DC5V-SHG_C12072.pdf
+$ENDCMP
+#
+$CMP BAV170HMFHT116
+D Diodes - General Purpose, Power, Switching 90VVrm 80V Vr 0.215A Io 150mA
+K
+F http://rohmfs.rohm.com/en/products/databook/datasheet/discrete/diode/switching/bav170hmfht116-e.pdf
+$ENDCMP
+#
+$CMP SS8050-G
+D Bipolar Transistors - BJT NPN TRANSISTOR 1.5A 40V
+K
+F http://www.comchiptech.com/admin/files/product/SS8050-G%20RevA181526.pdf
+$ENDCMP
+#
+$CMP HLK-PM03
+D Power Module AC-DC Through Hole RoHS
+K
+F https://datasheet.lcsc.com/szlcsc/1906201102_HI-LINK-HLK-PM03_C209904.pdf
+$ENDCMP
+#
+$CMP 0473003.YRT1L
+D Fuse Subminiature Slow Blow Acting 3A 125V Axial 3.175 X 7.11mm Epoxy Coated T/R
+K
+F https://www.arrow.com/en/products/0473003.yrt1l/littelfuse
+$ENDCMP
+#
+$CMP AO3480
+D MOSFET N Trench 30V 5.7A 1.45V @ 250uA 26.5 m @ 5.7A,10V SOT-23 RoHS
+K
+F https://datasheet.lcsc.com/szlcsc/1907081730_Alpha-Omega-Semicon-AOS-AO3480_C350817.pdf
+$ENDCMP
+#
+$CMP AO3401A
+D 30V P-Channel MOSFET
+K
+F https://datasheet.lcsc.com/szlcsc/Alpha-Omega-Semicon-AOS-AO3401A_C15127.pdf
+$ENDCMP
+#
+$CMP DS1307Z+T&R
+D DS1307Z+T&R, Real Time Clock, Battery Backup, Calendar, Clock, 56B RAM, I2C, 8-Pin SOIC
+K
+F https://datasheet.lcsc.com/szlcsc/Maxim-Integrated-DS1307Z-T-R_C9868.pdf
+$ENDCMP
+#
+$CMP DB126V-5.0-2P
+D Screw terminal P=5.0mm RoHS
+K
+F https://datasheet.lcsc.com/szlcsc/1906111430_DIBO-DB126V-5-0-2P_C395849.pdf
+$ENDCMP
+#
+$CMP DB126V-5.0-3P
+D Screw terminal P=5.0mm RoHS
+K
+F https://datasheet.lcsc.com/szlcsc/1906211611_DIBO-DB126V-5-0-3P_C395850.pdf
+$ENDCMP
+#
+$CMP UU9.8-10MH
+D Common Mode Chokes / Filters Power Line 10mH @ 1kHz Through Hole RoHS
+K
+F https://datasheet.lcsc.com/szlcsc/1811111206_Guangdong-Fenghua-Advanced-Tech-UU9-8-10mH_C148474.pdf
+$ENDCMP
+#
+$CMP R46KI310040M1K
+D CAP FILM 0.1UF 10% 560VDC RADIAL
+K
+F https://content.kemet.com/datasheets/KEM_F3093_R46_X2_275_110C.pdf
+$ENDCMP
+#
+$CMP VDR-10D561KJ
+D Varistors 460V 920V 3.5KA Through Hole RoHS
+K
+F https://datasheet.lcsc.com/szlcsc/1810161222_VDR-Varistor-VDR-10D561KJ_C273560.pdf
+$ENDCMP
+#
+$CMP TMXLi-206_32.768KHZ_12.5PF__20PPM
+D TUNING FORK CRYSTAL UNITS(SMD-Plastic Package)
+K
+F https://datasheet.lcsc.com/szlcsc/Zhejiang-Abel-Elec-TMXLi-206-32-768KHZ-12-5PF-20PPM_C145166.pdf
+$ENDCMP
+#
+$CMP 0443.500DR
+D LITTELFUSE - 0443.500DR - FUSE, 0.5A, 250VAC, TIME DELAY, SMD
+K
+F https://lcsc.componentsearchengine.com/Datasheets/2/0443.500DR.pdf
+$ENDCMP
+#
+#End Doc Library
