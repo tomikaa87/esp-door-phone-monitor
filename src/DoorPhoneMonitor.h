@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Settings.h"
-
 #include <CoreApplication.h>
 #include <Logger.h>
 #include <network/MQTT/MqttVariable.h>
@@ -21,12 +19,9 @@ private:
     const ApplicationConfig& _appConfig;
     CoreApplication _coreApplication;
     const Logger _log{ "DoorPhoneMonitor" };
-    Settings _settings;
 
     unsigned long _ringingSensorCheckTime = 0;
     unsigned long _ringingStateCheckTime = 0;
-
-    void onBlynkUpdateNeeded();
 
     struct Mqtt {
         Mqtt(MqttClient& mqttClient)

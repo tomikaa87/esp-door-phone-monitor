@@ -10,6 +10,12 @@ namespace RingingSensor
     volatile auto triggerCount = 0u;
 }
 
+namespace Pins
+{
+    constexpr auto RingingSense = D2;
+    constexpr auto RingerMute = D1;
+}
+
 ICACHE_RAM_ATTR void ringingSensorIsr()
 {
     RingingSensor::triggerCount += 1;
@@ -19,7 +25,6 @@ ICACHE_RAM_ATTR void ringingSensorIsr()
 DoorPhoneMonitor::DoorPhoneMonitor(const ApplicationConfig& appConfig)
     : _appConfig(appConfig)
     , _coreApplication(_appConfig)
-    , _settings(_coreApplication.settings())
     , _mqtt(_coreApplication.mqttClient())
 {
     Logger::setup(_appConfig, _coreApplication.systemClock());
@@ -28,13 +33,13 @@ DoorPhoneMonitor::DoorPhoneMonitor(const ApplicationConfig& appConfig)
     _coreApplication.setMqttUpdateHandler([this]{ updateMqtt(); });
 
     // Setup ringing sensor input pin
-    pinMode(D2, INPUT);
-    attachInterrupt(D2, ringingSensorIsr, FALLING);
+    pinMode(Pins::RingingSense, INPUT);
+    attachInterrupt(Pins::RingingSense, ringingSensorIsr, FALLING);
 
     // Setup speaker enable control pin
-    pinMode(D1, OUTPUT);
+    pinMode(Pins::RingerMute, OUTPUT);
     // Enable the speaker by default
-    digitalWrite(D1, 0);
+    digitalWrite(Pins::RingerMute, 0);
 
     // LED pin for testing
     pinMode(LED_BUILTIN, OUTPUT);
@@ -73,7 +78,7 @@ void DoorPhoneMonitor::setupMqtt()
 {
     _mqtt.muted.setChangedHandler([this](const bool& value) {
         _log.info("mute state changed: muted=%d", value ? 1 : 0);
-        digitalWrite(D1, value ? 1 : 0);
+        digitalWrite(Pins::RingerMute, value ? 1 : 0);
     });
 
     updateMqtt();
