@@ -40,4 +40,8 @@
 .vscode/settings.json
 .vscode/ipch
 
+# macOS
+.DS_Store
+
 src/PrivateConfig.h
+
