@@ -2,7 +2,7 @@ ESP Door Phone Monitor is an ESP8266-based device that monitors specific door ph
 
 # Software
 
-The ESP's firmware is based on Platform.io. It uses my own base library [esp-iot-base](https://github.com/tomikaa87/esp-iot-base) for fundamental functions like. OTA updates, MQTT and Blynk integration, remote logging etc. In its current state the software is pretty simple and does only the basics for ringing detection and mute functions. In the future I plan to improve it with automatic unmuting when it detects that the receiver has been picked after ringing to ensure that the user hears the person on the other side of the line.
+The ESP's firmware is based on Platform.io. It uses my own base library [esp-iot-base](https://github.com/tomikaa87/esp-iot-base) for fundamental functions like OTA updates, MQTT and Blynk integration, remote logging etc. In its current state the software is pretty simple and does only the basics for ringing detection and mute functions. In the future I plan to improve it with automatic unmuting when it detects that the receiver has been picked after ringing to ensure that the user hears the person on the other side of the line.
 
 # Schematics
 
