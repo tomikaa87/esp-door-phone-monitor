@@ -28,13 +28,13 @@ DoorPhoneMonitor::DoorPhoneMonitor(const ApplicationConfig& appConfig)
     _coreApplication.setMqttUpdateHandler([this]{ updateMqtt(); });
 
     // Setup ringing sensor input pin
-    pinMode(D1, INPUT);
-    attachInterrupt(D1, ringingSensorIsr, FALLING);
+    pinMode(D2, INPUT);
+    attachInterrupt(D2, ringingSensorIsr, FALLING);
 
     // Setup speaker enable control pin
-    pinMode(D2, OUTPUT);
+    pinMode(D1, OUTPUT);
     // Enable the speaker by default
-    digitalWrite(D2, 1);
+    digitalWrite(D1, 0);
 
     // LED pin for testing
     pinMode(LED_BUILTIN, OUTPUT);
@@ -73,7 +73,7 @@ void DoorPhoneMonitor::setupMqtt()
 {
     _mqtt.muted.setChangedHandler([this](const bool& value) {
         _log.info("mute state changed: muted=%d", value ? 1 : 0);
-        digitalWrite(D2, value ? 0 : 1);
+        digitalWrite(D1, value ? 1 : 0);
     });
 
     updateMqtt();
