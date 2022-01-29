@@ -39,6 +39,8 @@ private:
     unsigned long _ringingSensorCheckTime = 0;
     unsigned long _ringingStateCheckTime = 0;
 
+    volatile unsigned _ringingSensorTriggerCount = 0;
+
     struct Mqtt {
         Mqtt(MqttClient& mqttClient)
             : ringing{ PSTR("doorphone/ringing"), mqttClient }
@@ -51,4 +53,6 @@ private:
 
     void setupMqtt();
     void updateMqtt();
+
+    static void ringingSenseIsr(void* arg);
 };

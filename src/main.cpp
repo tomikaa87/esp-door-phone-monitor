@@ -11,7 +11,7 @@ void setup()
 {
     static ApplicationConfig appConfig;
 
-    appConfig.firmwareVersion = VersionNumber{ 1, 0, 1 };
+    appConfig.firmwareVersion = VersionNumber{ 1, 0, 2 };
 
     appConfig.logging.syslog.enabled = true;
     appConfig.logging.syslog.hostName = Config::Logging::SyslogHostName;

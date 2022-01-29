@@ -7,7 +7,6 @@ namespace RingingSensor
     constexpr unsigned long CheckInvervalMs = 500;
     constexpr unsigned long ActiveStateTimeoutMs = 3000;
     constexpr auto CountThreshold = 100u;
-    volatile auto triggerCount = 0u;
 }
 
 namespace Pins
@@ -15,11 +14,6 @@ namespace Pins
     constexpr auto Led = LED_BUILTIN;
     constexpr auto RingingSense = D2;
     constexpr auto RingerMute = D1;
-}
-
-ICACHE_RAM_ATTR void ringingSensorIsr()
-{
-    RingingSensor::triggerCount += 1;
 }
 
 DoorPhoneMonitor::DoorPhoneMonitor(const ApplicationConfig& appConfig)
@@ -34,7 +28,7 @@ DoorPhoneMonitor::DoorPhoneMonitor(const ApplicationConfig& appConfig)
 
     // Setup ringing sensor input pin
     pinMode(Pins::RingingSense, INPUT);
-    attachInterrupt(Pins::RingingSense, ringingSensorIsr, FALLING);
+    attachInterruptArg(Pins::RingingSense, ringingSenseIsr, this, FALLING);
 
     // Setup speaker mute control pin, unmute by default
     pinMode(Pins::RingerMute, OUTPUT);
@@ -53,10 +47,8 @@ void DoorPhoneMonitor::task()
         // Reset 'Sensor Check' timer
         _ringingSensorCheckTime = millis();
 
-        if (RingingSensor::triggerCount >= RingingSensor::CountThreshold) {
-            _log.info("ringing detected: triggerCount=%u", RingingSensor::triggerCount);
-
-            RingingSensor::triggerCount = 0;
+        if (_ringingSensorTriggerCount >= RingingSensor::CountThreshold) {
+            _log.info("ringing detected: triggerCount=%u", _ringingSensorTriggerCount);
 
             // Reset 'Active State' timer
             _ringingStateCheckTime = millis();
@@ -65,7 +57,7 @@ void DoorPhoneMonitor::task()
             setLed(Led::On);
         }
 
-        RingingSensor::triggerCount = 0;
+        _ringingSensorTriggerCount = 0;
     }
 
     if (_mqtt.ringing && millis() - _ringingStateCheckTime >= RingingSensor::ActiveStateTimeoutMs) {
@@ -99,4 +91,10 @@ void DoorPhoneMonitor::setLed(const Led state)
 void DoorPhoneMonitor::setMute(const Mute state)
 {
     digitalWrite(Pins::RingerMute, state == Mute::On ? 1 : 0);
+}
+
+void ICACHE_RAM_ATTR DoorPhoneMonitor::ringingSenseIsr(void* const arg)
+{
+    auto* self = static_cast<DoorPhoneMonitor*>(arg);
+    ++self->_ringingSensorTriggerCount;
 }
