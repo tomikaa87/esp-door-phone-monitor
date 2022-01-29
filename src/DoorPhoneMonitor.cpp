@@ -36,14 +36,13 @@ DoorPhoneMonitor::DoorPhoneMonitor(const ApplicationConfig& appConfig)
     pinMode(Pins::RingingSense, INPUT);
     attachInterrupt(Pins::RingingSense, ringingSensorIsr, FALLING);
 
-    // Setup speaker enable control pin
+    // Setup speaker mute control pin, unmute by default
     pinMode(Pins::RingerMute, OUTPUT);
-    // Enable the speaker by default
-    digitalWrite(Pins::RingerMute, 0);
+    setMute(Mute::Off);
 
     // LED pin for testing
     pinMode(Pins::Led, OUTPUT);
-    digitalWrite(Pins::Led, 1);
+    setLed(Led::Off);
 }
 
 void DoorPhoneMonitor::task()
@@ -80,9 +79,9 @@ void DoorPhoneMonitor::task()
 
 void DoorPhoneMonitor::setupMqtt()
 {
-    _mqtt.muted.setChangedHandler([this](const bool& value) {
-        _log.info("mute state changed: muted=%d", value ? 1 : 0);
-        digitalWrite(Pins::RingerMute, value ? 1 : 0);
+    _mqtt.muted.setChangedHandler([this](const bool& muted) {
+        _log.info("mute state changed via MQTT: muted=%d", muted ? 1 : 0);
+        setMute(muted ? Mute::On : Mute::Off);
     });
 
     updateMqtt();
@@ -95,4 +94,9 @@ void DoorPhoneMonitor::updateMqtt()
 void DoorPhoneMonitor::setLed(const Led state)
 {
     digitalWrite(Pins::Led, state == Led::On ? 0 : 1);
+}
+
+void DoorPhoneMonitor::setMute(const Mute state)
+{
+    digitalWrite(Pins::RingerMute, state == Mute::On ? 1 : 0);
 }

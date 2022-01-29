@@ -23,6 +23,14 @@ public:
 
     void setLed(Led state);
 
+    enum class Mute
+    {
+        Off,
+        On
+    };
+
+    void setMute(Mute state);
+
 private:
     const ApplicationConfig& _appConfig;
     CoreApplication _coreApplication;
