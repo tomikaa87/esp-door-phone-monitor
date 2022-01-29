@@ -15,6 +15,14 @@ public:
 
     void task();
 
+    enum class Led
+    {
+        Off,
+        On
+    };
+
+    void setLed(Led state);
+
 private:
     const ApplicationConfig& _appConfig;
     CoreApplication _coreApplication;

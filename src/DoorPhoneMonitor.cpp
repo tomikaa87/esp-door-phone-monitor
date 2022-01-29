@@ -12,6 +12,7 @@ namespace RingingSensor
 
 namespace Pins
 {
+    constexpr auto Led = LED_BUILTIN;
     constexpr auto RingingSense = D2;
     constexpr auto RingerMute = D1;
 }
@@ -19,7 +20,6 @@ namespace Pins
 ICACHE_RAM_ATTR void ringingSensorIsr()
 {
     RingingSensor::triggerCount += 1;
-    digitalWrite(LED_BUILTIN, (RingingSensor::triggerCount & 1) == 1);
 }
 
 DoorPhoneMonitor::DoorPhoneMonitor(const ApplicationConfig& appConfig)
@@ -42,8 +42,8 @@ DoorPhoneMonitor::DoorPhoneMonitor(const ApplicationConfig& appConfig)
     digitalWrite(Pins::RingerMute, 0);
 
     // LED pin for testing
-    pinMode(LED_BUILTIN, OUTPUT);
-    digitalWrite(LED_BUILTIN, 1);
+    pinMode(Pins::Led, OUTPUT);
+    digitalWrite(Pins::Led, 1);
 }
 
 void DoorPhoneMonitor::task()
@@ -62,6 +62,8 @@ void DoorPhoneMonitor::task()
             // Reset 'Active State' timer
             _ringingStateCheckTime = millis();
             _mqtt.ringing = true;
+
+            setLed(Led::On);
         }
 
         RingingSensor::triggerCount = 0;
@@ -69,7 +71,9 @@ void DoorPhoneMonitor::task()
 
     if (_mqtt.ringing && millis() - _ringingStateCheckTime >= RingingSensor::ActiveStateTimeoutMs) {
         _mqtt.ringing = false;
-        digitalWrite(LED_BUILTIN, 1);
+
+        setLed(Led::Off);
+
         _log.info("ringing ended");
     }
 }
@@ -86,4 +90,9 @@ void DoorPhoneMonitor::setupMqtt()
 
 void DoorPhoneMonitor::updateMqtt()
 {
+}
+
+void DoorPhoneMonitor::setLed(const Led state)
+{
+    digitalWrite(Pins::Led, state == Led::On ? 0 : 1);
 }
