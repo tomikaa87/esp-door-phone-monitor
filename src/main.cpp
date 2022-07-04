@@ -11,7 +11,7 @@ void setup()
 {
     static ApplicationConfig appConfig;
 
-    appConfig.firmwareVersion = VersionNumber{ 1, 0, 2 };
+    appConfig.firmwareVersion = VersionNumber{ 1, 0, 3 };
 
     appConfig.logging.syslog.enabled = true;
     appConfig.logging.syslog.hostName = Config::Logging::SyslogHostName;
@@ -22,6 +22,8 @@ void setup()
     appConfig.mqtt.brokerPort = Config::Mqtt::BrokerPort;
     appConfig.mqtt.enabled = true;
     appConfig.mqtt.id = Config::Mqtt::Id;
+    appConfig.mqtt.user = Config::Mqtt::User;
+    appConfig.mqtt.password = Config::Mqtt::Password;
 
     appConfig.persistence.Size = 8;
 
