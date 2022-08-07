@@ -1,6 +1,8 @@
 #include "DoorPhoneMonitor.h"
+#include "Utils.h"
 
 #include <cstdio>
+#include <sstream>
 
 namespace RingingSensor
 {
@@ -75,6 +77,47 @@ void DoorPhoneMonitor::setupMqtt()
         _log.info("mute state changed via MQTT: muted=%d", muted ? 1 : 0);
         setMute(muted ? Mute::On : Mute::Off);
     });
+
+    {
+        std::stringstream config;
+
+        config << '{';
+        config << Utils::pgmToStdString(PSTR(R"("icon":"mdi:phone-ring")"));
+        config << Utils::pgmToStdString(PSTR(R"(,"name":"Door Phone Ringing")"));
+        config << Utils::pgmToStdString(PSTR(R"(,"object_id":"door_phone_monitor_ringing")"));
+        config << Utils::pgmToStdString(PSTR(R"(,"unique_id":"door_phone_monitor_ringing")"));
+        config << Utils::pgmToStdString(PSTR(R"(,"state_topic":"doorphone/ringing")"));
+        config << '}';
+
+        _coreApplication.mqttClient().publish(
+            PSTR("homeassistant/sensor/door_phone_monitor_ringing/config"),
+            config.str(),
+            false
+        );
+    }
+
+    {
+        std::stringstream config;
+
+        config << '{';
+        config << Utils::pgmToStdString(R"("icon":"mdi:volume-off")");
+        config << Utils::pgmToStdString(R"(,"name":"Door Phone Mute")");
+        config << Utils::pgmToStdString(R"(,"object_id":"door_phone_monitor_mute")");
+        config << Utils::pgmToStdString(R"(,"unique_id":"door_phone_monitor_mute")");
+        config << Utils::pgmToStdString(R"(,"command_topic":"doorphone/mute")");
+        config << Utils::pgmToStdString(R"(,"state_topic":"doorphone/muted")");
+        config << Utils::pgmToStdString(R"(,"payload_on":"1")");
+        config << Utils::pgmToStdString(R"(,"payload_off":"0")");
+        config << Utils::pgmToStdString(R"(,"state_on":"1")");
+        config << Utils::pgmToStdString(R"(,"state_off":"0")");
+        config << '}';
+
+        _coreApplication.mqttClient().publish(
+            PSTR("homeassistant/switch/door_phone_monitor_mute/config"),
+            config.str(),
+            false
+        );
+    }
 
     updateMqtt();
 }
