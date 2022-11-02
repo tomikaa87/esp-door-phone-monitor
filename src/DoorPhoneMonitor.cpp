@@ -50,7 +50,7 @@ void DoorPhoneMonitor::task()
         _ringingSensorCheckTime = millis();
 
         if (_ringingSensorTriggerCount >= RingingSensor::CountThreshold) {
-            _log.info("ringing detected: triggerCount=%u", _ringingSensorTriggerCount);
+            _log.info_P(PSTR("ringing detected: triggerCount=%u"), _ringingSensorTriggerCount);
 
             // Reset 'Active State' timer
             _ringingStateCheckTime = millis();
@@ -67,14 +67,14 @@ void DoorPhoneMonitor::task()
 
         setLed(Led::Off);
 
-        _log.info("ringing ended");
+        _log.info_P(PSTR("ringing ended"));
     }
 }
 
 void DoorPhoneMonitor::setupMqtt()
 {
     _mqtt.muted.setChangedHandler([this](const bool& muted) {
-        _log.info("mute state changed via MQTT: muted=%d", muted ? 1 : 0);
+        _log.info_P(PSTR("mute state changed via MQTT: muted=%d"), muted ? 1 : 0);
         setMute(muted ? Mute::On : Mute::Off);
     });
 
@@ -100,16 +100,16 @@ void DoorPhoneMonitor::setupMqtt()
         std::stringstream config;
 
         config << '{';
-        config << Utils::pgmToStdString(R"("icon":"mdi:volume-off")");
-        config << Utils::pgmToStdString(R"(,"name":"Door Phone Mute")");
-        config << Utils::pgmToStdString(R"(,"object_id":"door_phone_monitor_mute")");
-        config << Utils::pgmToStdString(R"(,"unique_id":"door_phone_monitor_mute")");
-        config << Utils::pgmToStdString(R"(,"command_topic":"doorphone/mute")");
-        config << Utils::pgmToStdString(R"(,"state_topic":"doorphone/muted")");
-        config << Utils::pgmToStdString(R"(,"payload_on":"1")");
-        config << Utils::pgmToStdString(R"(,"payload_off":"0")");
-        config << Utils::pgmToStdString(R"(,"state_on":"1")");
-        config << Utils::pgmToStdString(R"(,"state_off":"0")");
+        config << Utils::pgmToStdString(PSTR(R"("icon":"mdi:volume-off")"));
+        config << Utils::pgmToStdString(PSTR(R"(,"name":"Door Phone Mute")"));
+        config << Utils::pgmToStdString(PSTR(R"(,"object_id":"door_phone_monitor_mute")"));
+        config << Utils::pgmToStdString(PSTR(R"(,"unique_id":"door_phone_monitor_mute")"));
+        config << Utils::pgmToStdString(PSTR(R"(,"command_topic":"doorphone/mute")"));
+        config << Utils::pgmToStdString(PSTR(R"(,"state_topic":"doorphone/muted")"));
+        config << Utils::pgmToStdString(PSTR(R"(,"payload_on":"1")"));
+        config << Utils::pgmToStdString(PSTR(R"(,"payload_off":"0")"));
+        config << Utils::pgmToStdString(PSTR(R"(,"state_on":"1")"));
+        config << Utils::pgmToStdString(PSTR(R"(,"state_off":"0")"));
         config << '}';
 
         _coreApplication.mqttClient().publish(
